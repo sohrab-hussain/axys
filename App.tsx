@@ -1,19 +1,13 @@
+import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import './src/i18n/i18n';
 import { useTranslation } from 'react-i18next';
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
-import { useLanguage } from './src/i18n/useLanguage';
-import type { Language } from './src/i18n/types';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import AppNavigator from './src/navigation/AppNavigator.tsx';
 
 const App: React.FC = () => {
-  const { t, i18n } = useTranslation();
-  const { changeLanguage, currentLanguage } = useLanguage();
+  const { i18n } = useTranslation();
+  // const { changeLanguage, currentLanguage } = useLanguage();
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -33,33 +27,7 @@ const App: React.FC = () => {
     );
   }
 
-  const handleLanguageChange = (lang: Language) => {
-    changeLanguage(lang);
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('welcome')}</Text>
-      <Text style={styles.text}>{t('hello', { name: 'Sohrab' })}</Text>
-
-      <Text style={styles.currentLang}>
-        Current: {currentLanguage.toUpperCase()}
-      </Text>
-
-      <View style={styles.buttons}>
-        <Button
-          title="English"
-          onPress={() => handleLanguageChange('en')}
-          disabled={currentLanguage === 'en'}
-        />
-        <Button
-          title="日本語"
-          onPress={() => handleLanguageChange('ja')}
-          disabled={currentLanguage === 'ja'}
-        />
-      </View>
-    </View>
-  );
+  return <AppNavigator />;
 };
 
 const styles = StyleSheet.create({
