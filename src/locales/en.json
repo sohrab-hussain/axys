@@ -1,0 +1,7 @@
+{
+  "welcome": "Welcome",
+  "hello": "Hello, {{name}}!",
+  "login": "Login",
+  "logout": "Logout",
+  "settings": "Settings"
+}
