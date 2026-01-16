@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Dimensions,
   ImageBackground,
   StatusBar,
   StyleSheet,
@@ -11,19 +10,17 @@ import {
 import { useTranslation } from 'react-i18next';
 import type { HomeScreenProps } from '../../navigation/types';
 
-const { width, height } = Dimensions.get('window');
+// const { width, height } = Dimensions.get('window');
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   // const { changeLanguage, currentLanguage } = useLanguage();
   const handlePrimaryButton = () => {
-    // console.log('Primary button pressed');
     //  navigation?.navigate('Settings');
   };
 
   const handleSecondaryButton = () => {
-    console.log('Secondary button pressed');
-    // navigation?.navigate('Login');
+     navigation?.navigate('SignUp');
   };
 
   return (

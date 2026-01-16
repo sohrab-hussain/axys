@@ -7,8 +7,9 @@ import type { RootStackParamList } from './types';
 // Import screens
 import HomeScreen from '../../src/app/screens/HomeScreen';
 import SettingsScreen from '../../src/app/screens/SettingsScreen';
-import { Image, Text, TouchableOpacity } from 'react-native';
-
+import { Image, TouchableOpacity } from 'react-native';
+import LoginScreen from '../app/screens/LoginScreen.tsx';
+import SignUpScreen from '../app/screens/SignUpScreen.tsx';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -62,6 +63,26 @@ const AppNavigator: React.FC = () => {
             component={SettingsScreen}
             options={{
               title: 'Settings',
+              headerStyle: {
+                backgroundColor: '#000',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              title: 'Login',
+              headerStyle: {
+                backgroundColor: '#000',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{
+              title: 'SignUp',
               headerStyle: {
                 backgroundColor: '#000',
               },
