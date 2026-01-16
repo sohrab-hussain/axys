@@ -63,12 +63,6 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
     console.log('Verifying code:', verificationCode);
     navigation?.navigate('UserDetails', { email: email });
 
-    // navigation?.reset({
-    //     index: 0,
-    //     routes: [{ name: 'Settings' }],
-    //   });
-
-
     // Add your verification logic here
     // try {
     //   const { data, error } = await supabase.auth.verifyOtp({
@@ -86,12 +80,7 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
     //
     //   // Successfully verified
     //   console.log('User verified:', data);
-    //   Alert.alert('Success', 'User verified successfully');
-    //   // Navigate to home or onboarding
-    //   // navigation?.reset({
-    //   //   index: 0,
-    //   //   routes: [{ name: 'Home' }],
-    //   // });
+    //   navigation?.navigate('UserDetails', { email: email });
     // } catch (error: any) {
     //   Alert.alert('Error', error.message || 'Verification failed');
     //   setCode(['', '', '', '', '', '']);

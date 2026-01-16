@@ -69,13 +69,13 @@ const BiometricsSetupScreen: React.FC<BiometricsSetupScreenProps> = ({
         // Save biometric preference
         await AsyncStorage.setItem('biometricsEnabled', 'true');
         await AsyncStorage.setItem('biometricPublicKey', publicKey);
-
-        Alert.alert('Success!', 'Biometric authentication has been enabled', [
-          {
-            text: 'OK',
-            onPress: () => navigation?.navigate('Home'),
-          },
-        ]);
+        navigation?.navigate('Dashboard');
+        // Alert.alert('Success!', 'Biometric authentication has been enabled', [
+        //   {
+        //     text: 'OK',
+        //     onPress: () => navigation?.navigate('Dashboard'),
+        //   },
+        // ]);
       } else {
         Alert.alert('Cancelled', 'Biometric setup was cancelled');
       }
@@ -92,7 +92,7 @@ const BiometricsSetupScreen: React.FC<BiometricsSetupScreenProps> = ({
   const handleSkip = async () => {
     try {
       await AsyncStorage.setItem('biometricsEnabled', 'false');
-      navigation?.navigate('Home');
+      navigation?.navigate('Dashboard');
     } catch (error) {
       console.error('Error saving preference:', error);
       navigation?.navigate('Home');
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     gap: 16,
-    paddingBottom: 40,
+    paddingBottom: 60,
   },
   button: {
     height: 56,

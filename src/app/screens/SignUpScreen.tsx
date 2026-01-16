@@ -41,10 +41,6 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
     //     return;
     //   }
     //
-    //   // Navigate to verification screen
-    //   // navigation?.navigate('VerifyEmail', {
-    //   //   email: email.trim().toLowerCase(),
-    //   // });
     //   navigation?.navigate('VerifyOTP', { email: email.trim().toLowerCase() });
     // } catch (error: any) {
     //   Alert.alert('Error', error.message || 'Something went wrong');

@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   BiometricsSetup: undefined;
+  Dashboard: undefined;
   VerifyOTP: {
     email?: string;
   };

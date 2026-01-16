@@ -14,6 +14,7 @@ import VerifyOTPScreen from '../app/screens/VerifyOTPScreen.tsx';
 import { t } from 'i18next';
 import UserDetailsScreen from '../app/screens/PersonalDetailsScreen.tsx';
 import BiometricsSetupScreen from '../app/screens/SetBiometricsScreen.tsx';
+import DashboardScreen from '../app/screens/DashboardScreen.tsx';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -109,6 +110,18 @@ const AppNavigator: React.FC = () => {
               title: t('userDetails'),
               headerStyle: {
                 backgroundColor: '#000',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="Dashboard"
+            component={DashboardScreen}
+            options={{
+              headerBackIcon: true,
+              title: t(''),
+              headerTransparent: true,
+              headerStyle: {
+                backgroundColor: 'transparent',
               },
             }}
           />
