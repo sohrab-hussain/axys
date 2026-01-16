@@ -1,35 +1,113 @@
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { BiometricsSetupScreenProps } from '../../navigation/types.ts';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import ReactNativeBiometrics from 'react-native-biometrics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BiometricsSetupScreenProps } from '../../navigation/types.ts';
+import { t } from 'i18next';
 
 const BiometricsSetupScreen: React.FC<BiometricsSetupScreenProps> = ({
   navigation,
 }) => {
-  const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    checkBiometrics();
+  }, []);
+
+  const checkBiometrics = async () => {
+    try {
+      const rnBiometrics = new ReactNativeBiometrics();
+      const { available, biometryType } =
+        await rnBiometrics.isSensorAvailable();
+
+      if (available && biometryType) {
+        // setBiometricType(biometryType);
+        console.log('Biometry type available:', biometryType);
+      } else {
+        // No biometrics available, skip to home
+        Alert.alert(
+          'Biometrics Not Available',
+          'Your device does not support biometric authentication.',
+          [
+            {
+              text: 'OK',
+              onPress: () => navigation?.navigate('Home'),
+            },
+          ],
+        );
+      }
+    } catch (error) {
+      console.error('Biometric check error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleEnableBiometrics = async () => {
-    console.log('Enable biometrics');
     try {
-      const value = await AsyncStorage.getItem('user');
-      if (value !== null) {
-        const parsedObject = JSON.parse(value);
-        console.log('Retrieved data:', parsedObject);
+      const rnBiometrics = new ReactNativeBiometrics();
 
-        return value;
+      // Create keys for biometric authentication
+      const { publicKey } = await rnBiometrics.createKeys();
+      console.log('Public key created:', publicKey);
+
+      // Prompt for biometric authentication
+      const { success } = await rnBiometrics.simplePrompt({
+        promptMessage: 'Authenticate to enable biometrics',
+        cancelButtonText: 'Cancel',
+      });
+
+      if (success) {
+        // Save biometric preference
+        await AsyncStorage.setItem('biometricsEnabled', 'true');
+        await AsyncStorage.setItem('biometricPublicKey', publicKey);
+
+        Alert.alert('Success!', 'Biometric authentication has been enabled', [
+          {
+            text: 'OK',
+            onPress: () => navigation?.navigate('Home'),
+          },
+        ]);
+      } else {
+        Alert.alert('Cancelled', 'Biometric setup was cancelled');
       }
-    } catch (e) {
-      console.error('Failed to fetch the data', e);
+    } catch (error: any) {
+      console.error('Biometric enrollment error:', error);
+      Alert.alert(
+        'Error',
+        error.message || 'Could not enable biometric authentication',
+      );
+    } finally {
     }
-    // Add biometric authentication logic here
-    // navigation?.navigate('Home');
   };
 
-  const handleSkip = () => {
-    console.log('Skip biometrics');
-    // navigation?.navigate('Home');
+  const handleSkip = async () => {
+    try {
+      await AsyncStorage.setItem('biometricsEnabled', 'false');
+      navigation?.navigate('Home');
+    } catch (error) {
+      console.error('Error saving preference:', error);
+      navigation?.navigate('Home');
+    }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <View style={[styles.content, { justifyContent: 'center' }]}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -258,13 +336,20 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     paddingHorizontal: 20,
   },
+  biometricType: {
+    fontSize: 14,
+    color: '#6c5ce7',
+    textAlign: 'center',
+    marginTop: 12,
+    fontWeight: '500',
+  },
   spacer: {
     flex: 1,
   },
   buttonContainer: {
     width: '100%',
     gap: 16,
-    paddingBottom: 60,
+    paddingBottom: 40,
   },
   button: {
     height: 56,
