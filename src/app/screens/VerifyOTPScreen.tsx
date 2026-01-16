@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   Image,
   StyleSheet,
   Text,
@@ -9,15 +11,17 @@ import {
 } from 'react-native';
 import { VerifyOTPScreenProps } from '../../navigation/types.ts';
 import { t } from 'i18next';
+import { supabase } from '../../configs/supabase.ts';
 
 const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({ route }) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const [timer, setTimer] = useState(60);
+  const [loading, setLoading] = useState(false);
   const inputRefs = useRef<(TextInput | null)[]>([]);
 
   const email = route.params.email || 'sohrab@gmail.com';
 
-  console.log("email = ", email);
+  console.log('email = ', email);
   // Timer countdown
   useEffect(() => {
     if (timer > 0) {
@@ -54,10 +58,38 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({ route }) => {
     }
   };
 
-  const handleVerify = (verificationCode: string) => {
+  const handleVerify = async (verificationCode: string) => {
     console.log('Verifying code:', verificationCode);
     // Add your verification logic here
-    // navigation?.navigate('NextScreen');
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token: verificationCode,
+        type: 'email', // or 'magiclink' depending on your setup
+      });
+
+      if (error) {
+        Alert.alert('Invalid Code', error.message);
+        setCode(['', '', '', '', '', '']);
+        inputRefs.current[0]?.focus();
+        return;
+      }
+
+      // Successfully verified
+      console.log('User verified:', data);
+      Alert.alert('Success', 'User verified successfully');
+      // Navigate to home or onboarding
+      // navigation?.reset({
+      //   index: 0,
+      //   routes: [{ name: 'Home' }],
+      // });
+    } catch (error: any) {
+      Alert.alert('Error', error.message || 'Verification failed');
+      setCode(['', '', '', '', '', '']);
+      inputRefs.current[0]?.focus();
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleResend = () => {
@@ -129,6 +161,8 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({ route }) => {
               : t('resendCode')}
           </Text>
         </TouchableOpacity>
+
+        { loading && <ActivityIndicator color="#fff" /> }
       </View>
     </View>
   );

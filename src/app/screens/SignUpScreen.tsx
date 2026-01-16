@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -11,16 +13,48 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { SignUpScreenProps } from '../../navigation/types';
+import { supabase } from '../../configs/supabase.ts';
 
 const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleNext = () => {
-    if (email && isChecked) {
-      navigation?.navigate('VerifyOTP', {email: email});
+  const handleNext = async () => {
+    if (!email || !isChecked) return;
+
+    setLoading(true);
+
+    try {
+      // Send OTP to email
+      const { data, error } = await supabase.auth.signInWithOtp({
+        email: email.trim().toLowerCase(),
+        options: {
+          // Optional: customize email
+          emailRedirectTo: undefined, // Not needed for mobile
+        },
+      });
+
+      if (error) {
+        Alert.alert('Error', error.message);
+        return;
+      }
+
+      // Navigate to verification screen
+      // navigation?.navigate('VerifyEmail', {
+      //   email: email.trim().toLowerCase(),
+      // });
+      navigation?.navigate('VerifyOTP', { email: email.trim().toLowerCase() });
+    } catch (error: any) {
+      Alert.alert('Error', error.message || 'Something went wrong');
+    } finally {
+      setLoading(false);
     }
+
+    // if (email && isChecked) {
+    //   navigation?.navigate('VerifyOTP', { email: email });
+    // }
   };
 
   const isButtonDisabled = !email || !isChecked;
@@ -80,21 +114,28 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
             </TouchableOpacity>
 
             {/* Next Button */}
-            <TouchableOpacity
-              style={[styles.button, isButtonDisabled && styles.buttonDisabled]}
-              onPress={handleNext}
-              disabled={isButtonDisabled}
-              activeOpacity={0.8}
-            >
-              <Text
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <TouchableOpacity
                 style={[
-                  styles.buttonText,
-                  isButtonDisabled && styles.buttonTextDisabled,
+                  styles.button,
+                  isButtonDisabled && styles.buttonDisabled,
                 ]}
+                onPress={handleNext}
+                disabled={isButtonDisabled}
+                activeOpacity={0.8}
               >
-                {t('next')}
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={[
+                    styles.buttonText,
+                    isButtonDisabled && styles.buttonTextDisabled,
+                  ]}
+                >
+                  {t('next')}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
