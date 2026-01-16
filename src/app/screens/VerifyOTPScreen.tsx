@@ -64,30 +64,30 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
     navigation?.navigate('UserDetails', { email: email });
 
     // Add your verification logic here
-    // try {
-    //   const { data, error } = await supabase.auth.verifyOtp({
-    //     email,
-    //     token: verificationCode,
-    //     type: 'email', // or 'magiclink' depending on your setup
-    //   });
-    //
-    //   if (error) {
-    //     Alert.alert('Invalid Code', error.message);
-    //     setCode(['', '', '', '', '', '']);
-    //     inputRefs.current[0]?.focus();
-    //     return;
-    //   }
-    //
-    //   // Successfully verified
-    //   console.log('User verified:', data);
-    //   navigation?.navigate('UserDetails', { email: email });
-    // } catch (error: any) {
-    //   Alert.alert('Error', error.message || 'Verification failed');
-    //   setCode(['', '', '', '', '', '']);
-    //   inputRefs.current[0]?.focus();
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token: verificationCode,
+        type: 'email', // or 'magiclink' depending on your setup
+      });
+
+      if (error) {
+        Alert.alert('Invalid Code', error.message);
+        setCode(['', '', '', '', '', '']);
+        inputRefs.current[0]?.focus();
+        return;
+      }
+
+      // Successfully verified
+      console.log('User verified:', data);
+      navigation?.navigate('UserDetails', { email: email });
+    } catch (error: any) {
+      Alert.alert('Error', error.message || 'Verification failed');
+      setCode(['', '', '', '', '', '']);
+      inputRefs.current[0]?.focus();
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleResend = () => {

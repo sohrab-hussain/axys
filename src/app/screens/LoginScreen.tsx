@@ -26,7 +26,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
         .select('*')
         .eq('email', email)
         .single();
-      
+
       if (data?.user) {
         console.log('User exists = ', data);
       } else {
