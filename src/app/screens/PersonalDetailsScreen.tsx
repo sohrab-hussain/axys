@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   Modal,
   Platform,
   ScrollView,
@@ -13,6 +15,9 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { UserDetailsScreenProps } from '../../navigation/types.ts';
 import { useTranslation } from 'react-i18next';
+import { supabase } from '../../configs/supabase.ts';
+import { email } from '@sideway/address';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // interface UserDetailsScreenProps {
 //   navigation?: any;
@@ -20,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 
 const UserDetailsScreen: React.FC<UserDetailsScreenProps> = ({
   navigation,
+  route,
 }) => {
   const [firstName, setFirstName] = useState('Sohrab');
   const [middleName, setMiddleName] = useState('');
@@ -34,6 +40,9 @@ const UserDetailsScreen: React.FC<UserDetailsScreenProps> = ({
   const [showNationalityPicker, setShowNationalityPicker] = useState(false);
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const userEmail = route.params.email;
   const { t } = useTranslation();
   const countries = [
     'United States of America',
@@ -113,7 +122,7 @@ const UserDetailsScreen: React.FC<UserDetailsScreenProps> = ({
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     // Validate all fields before submitting
     if (passwordError || confirmPasswordError) {
       return;
@@ -127,7 +136,35 @@ const UserDetailsScreen: React.FC<UserDetailsScreenProps> = ({
       nationality,
       password,
     });
-    navigation?.navigate('BiometricsSetup');
+    setLoading(true);
+    const { data, error } = await supabase.auth.signUp({
+      email: userEmail!,
+      password: password,
+      options: {
+        data: {
+          firstName: firstName,
+          middleName: middleName,
+          lastName: lastName,
+          dateOfBirth: formatDate(dateOfBirth),
+          nationality: nationality,
+        },
+      },
+    });
+
+    setLoading(false);
+    if (data.user) {
+      try {
+        await AsyncStorage.setItem(
+          'user',
+          JSON.stringify(data.user?.user_metadata),
+        );
+        console.log('Data successfully saved');
+      } catch (e) {
+        console.error('Failed to save the data', e);
+      }
+      navigation?.navigate('BiometricsSetup');
+    }
+    console.log(data.user?.user_metadata);
   };
 
   const isButtonDisabled =
@@ -343,21 +380,25 @@ const UserDetailsScreen: React.FC<UserDetailsScreenProps> = ({
 
         {/* Next Button */}
         <View style={styles.footer}>
-          <TouchableOpacity
-            style={[styles.button, isButtonDisabled && styles.buttonDisabled]}
-            onPress={handleNext}
-            disabled={isButtonDisabled}
-            activeOpacity={0.8}
-          >
-            <Text
-              style={[
-                styles.buttonText,
-                isButtonDisabled && styles.buttonTextDisabled,
-              ]}
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <TouchableOpacity
+              style={[styles.button, isButtonDisabled && styles.buttonDisabled]}
+              onPress={handleNext}
+              disabled={isButtonDisabled}
+              activeOpacity={0.8}
             >
-              {t('next')}
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={[
+                  styles.buttonText,
+                  isButtonDisabled && styles.buttonTextDisabled,
+                ]}
+              >
+                {t('next')}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </View>

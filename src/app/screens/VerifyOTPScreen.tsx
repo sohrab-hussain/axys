@@ -23,7 +23,6 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
 
   const email = route.params.email || 'sohrab@gmail.com';
 
-  console.log('email = ', email);
   // Timer countdown
   useEffect(() => {
     if (timer > 0) {

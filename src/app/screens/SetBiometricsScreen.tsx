@@ -2,14 +2,26 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { BiometricsSetupScreenProps } from '../../navigation/types.ts';
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BiometricsSetupScreen: React.FC<BiometricsSetupScreenProps> = ({
   navigation,
 }) => {
   const { t } = useTranslation();
 
-  const handleEnableBiometrics = () => {
+  const handleEnableBiometrics = async () => {
     console.log('Enable biometrics');
+    try {
+      const value = await AsyncStorage.getItem('user');
+      if (value !== null) {
+        const parsedObject = JSON.parse(value);
+        console.log('Retrieved data:', parsedObject);
+
+        return value;
+      }
+    } catch (e) {
+      console.error('Failed to fetch the data', e);
+    }
     // Add biometric authentication logic here
     // navigation?.navigate('Home');
   };
