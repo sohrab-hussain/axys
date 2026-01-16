@@ -158,7 +158,7 @@ const UserDetailsScreen: React.FC<UserDetailsScreenProps> = ({
           'user',
           JSON.stringify(data.user?.user_metadata),
         );
-        console.log('Data successfully saved');
+        console.log('Data successfully saved', data.user);
       } catch (e) {
         console.error('Failed to save the data', e);
       }

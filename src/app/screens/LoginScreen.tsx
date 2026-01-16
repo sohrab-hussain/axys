@@ -11,14 +11,27 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import type { LoginScreenProps } from '../../navigation/types';
+import { supabase } from '../../configs/supabase.ts';
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('id.sohrabhussain@gmail.com');
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (email) {
       console.log('Email:', email);
+
+      const { data, error } = await supabase
+        .from('profiles') // or your users table
+        .select('*')
+        .eq('email', email)
+        .single();
+      
+      if (data?.user) {
+        console.log('User exists = ', data);
+      } else {
+        console.log('User available', error);
+      }
     }
   };
 
