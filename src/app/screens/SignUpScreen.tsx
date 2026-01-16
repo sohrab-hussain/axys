@@ -1,5 +1,15 @@
-import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../i18n/useLanguage';
 import type { SignUpScreenProps } from '../../navigation/types';
@@ -9,32 +19,90 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   const { changeLanguage, currentLanguage } = useLanguage();
 
-  const handleLanguageChange = (lang: Language) => {
-    changeLanguage(lang);
+  const [email, setEmail] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleNext = () => {
+    if (email && isChecked) {
+      console.log('Email:', email);
+    }
   };
+
+  const isButtonDisabled = !email || !isChecked;
 
   return (
     <View style={styles.container}>
-      {/*<Text style={styles.title}>{t('settings')}</Text>*/}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardView}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Header Section */}
+          <View style={styles.header}>
+            <Text style={styles.title}>{t('createAccount')}</Text>
+            <Text style={styles.subtitle}>{t('futureFinancialfreedom')}</Text>
+          </View>
 
-      <Text style={styles.subtitle}>{t('changeLanguage')}</Text>
+          {/* Email Input Section */}
+          <View style={styles.inputSection}>
+            <Text style={styles.label}>{t('email')}</Text>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              placeholder=""
+              placeholderTextColor="#666"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
 
-      <View style={styles.languageButtons}>
-        <Button
-          title="English"
-          onPress={() => handleLanguageChange('en')}
-          disabled={currentLanguage === 'en'}
-        />
-        <Button
-          title="日本語"
-          onPress={() => handleLanguageChange('ja')}
-          disabled={currentLanguage === 'ja'}
-        />
-      </View>
+          {/* Spacer to push footer to bottom */}
+          <View style={styles.spacer} />
 
-      <View style={styles.backButton}>
-        <Button title="Back to Home" onPress={() => navigation.goBack()} />
-      </View>
+          {/* Footer Section */}
+          <View style={styles.footer}>
+            {/* Checkbox and Terms */}
+            <TouchableOpacity
+              style={styles.checkboxContainer}
+              onPress={() => setIsChecked(!isChecked)}
+              activeOpacity={0.7}
+            >
+              <View
+                style={[styles.checkbox, isChecked && styles.checkboxChecked]}
+              >
+                {isChecked && <View style={styles.checkmark} />}
+              </View>
+              <Text style={styles.checkboxText}>
+                {t('byCreating')}{' '}
+                <Text style={styles.link}>{t('termsAndServices')}</Text> {t('and')}{' '}
+                <Text style={styles.link}>{t('privacyPolicy')}</Text>
+              </Text>
+            </TouchableOpacity>
+
+            {/* Next Button */}
+            <TouchableOpacity
+              style={[styles.button, isButtonDisabled && styles.buttonDisabled]}
+              onPress={handleNext}
+              disabled={isButtonDisabled}
+              activeOpacity={0.8}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  isButtonDisabled && styles.buttonTextDisabled,
+                ]}
+              >
+                {t('next')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };
@@ -42,27 +110,110 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#000',
   },
+  keyboardView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 24,
+    backgroundColor: '#000',
+    paddingBottom: 40
+  },
+  header: {
+    paddingTop: 20,
+    marginBottom: 40,
+  },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    fontSize: 28,
+    fontWeight: '600',
     color: '#fff',
+    marginBottom: 16,
+    letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 18,
-    marginTop: 20,
-    marginBottom: 10,
+    fontSize: 15,
+    color: '#999',
+    lineHeight: 22,
+  },
+  inputSection: {
+    marginBottom: 24,
+  },
+  label: {
+    fontSize: 14,
+    color: '#999',
+    marginBottom: 8,
+  },
+  input: {
+    backgroundColor: '#1a1a1a',
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 16,
     color: '#fff',
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
   },
-  languageButtons: {
-    gap: 10,
-    marginTop: 10,
+  spacer: {
+    flex: 1,
   },
-  backButton: {
-    marginTop: 40,
+  footer: {
+    paddingBottom: 20,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 20,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 1.5,
+    borderColor: '#666',
+    marginRight: 12,
+    marginTop: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkboxChecked: {
+    backgroundColor: '#6c5ce7',
+    borderColor: '#6c5ce7',
+  },
+  checkmark: {
+    width: 10,
+    height: 10,
+    backgroundColor: '#fff',
+    borderRadius: 2,
+  },
+  checkboxText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#999',
+    lineHeight: 20,
+  },
+  link: {
+    color: '#fff',
+    textDecorationLine: 'underline',
+  },
+  button: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonDisabled: {
+    backgroundColor: '#333',
+  },
+  buttonText: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#000',
+  },
+  buttonTextDisabled: {
+    color: '#666',
   },
 });
 

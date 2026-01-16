@@ -3,7 +3,15 @@
   "hello": "Hello, {{name}}!",
   "login": "Login",
   "logout": "Logout",
+  "email": "Email",
+  "next": "Next",
   "settings": "Settings",
   "changeLanguage": "Change Language",
-  "signup": "SignUp"
+  "signup": "SignUp",
+  "createAccount": "Create Axys account",
+  "futureFinancialfreedom": "The future of your financial freedom. It's no longer about digits and decimals - it's about discovery.",
+  "byCreating": "By creating an account, I agree to Axys's",
+  "termsAndServices": "Terms of Service",
+  "privacyPolicy": "Privacy Policy",
+  "and": "and",
 }
