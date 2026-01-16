@@ -4,5 +4,6 @@
   "login": "Login",
   "logout": "Logout",
   "settings": "Settings",
-  "changeLanguage": "Change Language"
+  "changeLanguage": "Change Language",
+  "signup": "SignUp"
 }

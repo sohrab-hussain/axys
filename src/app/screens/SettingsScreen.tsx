@@ -15,7 +15,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('settings')}</Text>
+      {/*<Text style={styles.title}>{t('settings')}</Text>*/}
 
       <Text style={styles.subtitle}>{t('changeLanguage')}</Text>
 
@@ -33,7 +33,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
       </View>
 
       <View style={styles.backButton}>
-        <Button title="← Back to Home" onPress={() => navigation.goBack()} />
+        <Button title="Back to Home" onPress={() => navigation.goBack()} />
       </View>
     </View>
   );
@@ -43,17 +43,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#fff',
   },
   subtitle: {
     fontSize: 18,
     marginTop: 20,
     marginBottom: 10,
+    color: '#fff',
   },
   languageButtons: {
     gap: 10,
