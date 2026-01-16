@@ -17,7 +17,7 @@ import { supabase } from '../../configs/supabase.ts';
 
 const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('id.sohrabhussain@gmail.com');
   const [isChecked, setIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -26,35 +26,35 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
 
     setLoading(true);
 
-    try {
-      // Send OTP to email
-      const { data, error } = await supabase.auth.signInWithOtp({
-        email: email.trim().toLowerCase(),
-        options: {
-          // Optional: customize email
-          emailRedirectTo: undefined, // Not needed for mobile
-        },
-      });
-
-      if (error) {
-        Alert.alert('Error', error.message);
-        return;
-      }
-
-      // Navigate to verification screen
-      // navigation?.navigate('VerifyEmail', {
-      //   email: email.trim().toLowerCase(),
-      // });
-      navigation?.navigate('VerifyOTP', { email: email.trim().toLowerCase() });
-    } catch (error: any) {
-      Alert.alert('Error', error.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
-
-    // if (email && isChecked) {
-    //   navigation?.navigate('VerifyOTP', { email: email });
+    // try {
+    //   // Send OTP to email
+    //   const { data, error } = await supabase.auth.signInWithOtp({
+    //     email: email.trim().toLowerCase(),
+    //     options: {
+    //       // Optional: customize email
+    //       emailRedirectTo: undefined, // Not needed for mobile
+    //     },
+    //   });
+    //
+    //   if (error) {
+    //     Alert.alert('Error', error.message);
+    //     return;
+    //   }
+    //
+    //   // Navigate to verification screen
+    //   // navigation?.navigate('VerifyEmail', {
+    //   //   email: email.trim().toLowerCase(),
+    //   // });
+    //   navigation?.navigate('VerifyOTP', { email: email.trim().toLowerCase() });
+    // } catch (error: any) {
+    //   Alert.alert('Error', error.message || 'Something went wrong');
+    // } finally {
+    //   setLoading(false);
     // }
+
+    if (email && isChecked) {
+      navigation?.navigate('VerifyOTP', { email: email });
+    }
   };
 
   const isButtonDisabled = !email || !isChecked;

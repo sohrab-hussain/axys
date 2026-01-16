@@ -12,6 +12,8 @@ import LoginScreen from '../app/screens/LoginScreen.tsx';
 import SignUpScreen from '../app/screens/SignUpScreen.tsx';
 import VerifyOTPScreen from '../app/screens/VerifyOTPScreen.tsx';
 import { t } from 'i18next';
+import UserDetailsScreen from '../app/screens/PersonalDetailsScreen.tsx';
+import BiometricsSetupScreen from '../app/screens/SetBiometricsScreen.tsx';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -95,6 +97,27 @@ const AppNavigator: React.FC = () => {
             component={VerifyOTPScreen}
             options={{
               title: t('verifyOTP'),
+              headerStyle: {
+                backgroundColor: '#000',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="UserDetails"
+            component={UserDetailsScreen}
+            options={{
+              title: t('userDetails'),
+              headerStyle: {
+                backgroundColor: '#000',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="BiometricsSetup"
+            component={BiometricsSetupScreen}
+            options={{
+              title: t(''),
+              headerBackIcon: true,
               headerStyle: {
                 backgroundColor: '#000',
               },

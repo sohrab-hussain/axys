@@ -5,9 +5,10 @@ export type RootStackParamList = {
   Home: undefined;
   Settings: undefined;
   // Profile: { userId: string; name?: string };
-  // Details: { itemId: number };
+  UserDetails: { email?: string };
   Login: undefined;
   SignUp: undefined;
+  BiometricsSetup: undefined;
   VerifyOTP: {
     email?: string;
   };
@@ -31,6 +32,16 @@ export type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'Sign
 export type VerifyOTPScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'VerifyOTP'
+>;
+
+export type UserDetailsScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'UserDetails'
+>;
+
+export type BiometricsSetupScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'BiometricsSetup'
 >;
 
 // Declare global types for navigation

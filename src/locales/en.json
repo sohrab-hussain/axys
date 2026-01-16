@@ -22,4 +22,20 @@
   "home": "Home",
   "verifyOTP": "Verify OTP",
   "backToHome": "Back to Home",
+  "userDetails": "User Details",
+  "confirmPassword": "Confirm password",
+  "password": "Password",
+  "done": "done",
+  "passwordValidationError": "Must be at least 8 characters with uppercase, lowercase, and number",
+  "firstName": "First Name",
+  "middleName": "Middle Name (Optional)",
+  "lastName": "Last Name",
+  "dob": "Date Of Birth",
+  "nationality": "Nationality",
+  "letsKnow": "Let's get to know you",
+  "useBiometrics": "Use biometrics to quickly and securely log in",
+  "proceed": "Proceed",
+  "skip": "Skip",
+  "setupBiometrics": "Setup Biometrics"
+
 }

@@ -21,5 +21,16 @@
   "resendCode": "コードを再送信する",
   "home": "家",
   "verifyOTP": "OTPを確認する",
-  "backToHome": "ホームに戻る"
+  "backToHome": "ホームに戻る",
+  "userDetails": "ユーザー詳細",
+  "confirmPassword": "パスワードを認証する",
+  "password": "パスワード",
+  "done": "終わり",
+  "passwordValidationError": "大文字、小文字、数字を含む 8 文字以上である必要があります",
+  "firstName": "ファーストネーム",
+  "middleName": "ミドルネーム（任意）",
+  "lastName": "苗字",
+  "dob": "生年月日",
+  "nationality": "国籍",
+  "letsKnow": "あなたについて知りましょう"
 }
