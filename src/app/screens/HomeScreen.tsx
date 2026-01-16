@@ -15,11 +15,11 @@ import type { HomeScreenProps } from '../../navigation/types';
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   // const { changeLanguage, currentLanguage } = useLanguage();
-  const handlePrimaryButton = () => {
-    //  navigation?.navigate('Settings');
+  const handleLoginButton = () => {
+    navigation?.navigate('Login');
   };
 
-  const handleSecondaryButton = () => {
+  const handleSignUpButton = () => {
      navigation?.navigate('SignUp');
   };
 
@@ -46,7 +46,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             {/* Primary Button (White) */}
             <TouchableOpacity
               style={[styles.button, styles.primaryButton]}
-              onPress={handlePrimaryButton}
+              onPress={handleLoginButton}
               activeOpacity={0.8}
             >
               <Text style={styles.primaryButtonText}>{t('login')}</Text>
@@ -55,7 +55,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             {/* Secondary Button (Transparent with border) */}
             <TouchableOpacity
               style={[styles.button, styles.secondaryButton]}
-              onPress={handleSecondaryButton}
+              onPress={handleSignUpButton}
               activeOpacity={0.8}
             >
               <Text style={styles.secondaryButtonText}>{t('signup')}</Text>

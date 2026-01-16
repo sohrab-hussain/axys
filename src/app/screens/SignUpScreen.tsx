@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useLanguage } from '../../i18n/useLanguage';
 import type { SignUpScreenProps } from '../../navigation/types';
-import type { Language } from '../../i18n/types';
 
 const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
-  const { changeLanguage, currentLanguage } = useLanguage();
-
   const [email, setEmail] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
@@ -79,8 +74,8 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
               </View>
               <Text style={styles.checkboxText}>
                 {t('byCreating')}{' '}
-                <Text style={styles.link}>{t('termsAndServices')}</Text> {t('and')}{' '}
-                <Text style={styles.link}>{t('privacyPolicy')}</Text>
+                <Text style={styles.link}>{t('termsAndServices')}</Text>{' '}
+                {t('and')} <Text style={styles.link}>{t('privacyPolicy')}</Text>
               </Text>
             </TouchableOpacity>
 
