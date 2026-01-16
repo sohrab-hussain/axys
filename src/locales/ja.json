@@ -14,5 +14,9 @@
   "termsAndServices": "利用規約",
   "privacyPolicy": "プライバシーポリシー",
   "and": "そして",
-  "loginAccount": "Axysアカウントにログイン"
+  "loginAccount": "Axysアカウントにログイン",
+  "weHaveSent": "6桁の確認コードを送信しました ",
+  "theCodeExpire": "このコードは2分後に有効期限が切れます。 ",
+  "verifyYourEmail": "メールアドレスを確認してください",
+  "resendCode": "コードを再送信する"
 }

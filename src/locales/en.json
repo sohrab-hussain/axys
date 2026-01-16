@@ -14,5 +14,9 @@
   "termsAndServices": "Terms of Service",
   "privacyPolicy": "Privacy Policy",
   "and": "and",
-  "loginAccount": "Login Axys account"
+  "loginAccount": "Login Axys account",
+  "weHaveSent": "We've sent a 6-digit verification code to ",
+  "theCodeExpire": ". The code expires in 2 minutes. ",
+  "verifyYourEmail": "Verify your email",
+  "resendCode": "Resend code",
 }

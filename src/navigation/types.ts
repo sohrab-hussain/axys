@@ -8,6 +8,13 @@ export type RootStackParamList = {
   // Details: { itemId: number };
   Login: undefined;
   SignUp: undefined;
+  VerifyOTP: {
+    route?: {
+      params?: {
+        email?: string;
+      };
+    };
+  };
 };
 
 // Helper types for screens
@@ -24,6 +31,11 @@ export type LoginScreenProps = NativeStackScreenProps<
   'Login'
 >;
 export type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
+
+export type VerifyOTPScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'VerifyOTP'
+>;
 
 // Declare global types for navigation
 declare global {

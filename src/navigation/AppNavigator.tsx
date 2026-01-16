@@ -10,6 +10,7 @@ import SettingsScreen from '../../src/app/screens/SettingsScreen';
 import { Image, TouchableOpacity } from 'react-native';
 import LoginScreen from '../app/screens/LoginScreen.tsx';
 import SignUpScreen from '../app/screens/SignUpScreen.tsx';
+import VerifyOTPScreen from '../app/screens/VerifyOTPScreen.tsx';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -83,6 +84,16 @@ const AppNavigator: React.FC = () => {
             component={SignUpScreen}
             options={{
               title: 'SignUp',
+              headerStyle: {
+                backgroundColor: '#000',
+              },
+            }}
+          />
+          <Stack.Screen
+            name="VerifyOTP"
+            component={VerifyOTPScreen}
+            options={{
+              title: 'Verify OTP',
               headerStyle: {
                 backgroundColor: '#000',
               },
