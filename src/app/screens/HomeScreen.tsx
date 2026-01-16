@@ -16,7 +16,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   // const { changeLanguage, currentLanguage } = useLanguage();
   const handleLoginButton = () => {
-    navigation?.navigate('VerifyOTP', {});
+    navigation?.navigate('Login');
   };
 
   const handleSignUpButton = () => {

@@ -19,7 +19,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
 
   const handleNext = () => {
     if (email && isChecked) {
-      console.log('Email:', email);
+      navigation?.navigate('VerifyOTP', {email: email});
     }
   };
 

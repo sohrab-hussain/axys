@@ -11,6 +11,7 @@ import { Image, TouchableOpacity } from 'react-native';
 import LoginScreen from '../app/screens/LoginScreen.tsx';
 import SignUpScreen from '../app/screens/SignUpScreen.tsx';
 import VerifyOTPScreen from '../app/screens/VerifyOTPScreen.tsx';
+import { t } from 'i18next';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -36,7 +37,7 @@ const AppNavigator: React.FC = () => {
             name="Home"
             component={HomeScreen}
             options={({ navigation }) => ({
-              title: 'Home',
+              title: t('home'),
               headerTransparent: true,
               headerTitle: () => (
                 <Image
@@ -63,7 +64,7 @@ const AppNavigator: React.FC = () => {
             name="Settings"
             component={SettingsScreen}
             options={{
-              title: 'Settings',
+              title: t('settings'),
               headerStyle: {
                 backgroundColor: '#000',
               },
@@ -73,7 +74,7 @@ const AppNavigator: React.FC = () => {
             name="Login"
             component={LoginScreen}
             options={{
-              title: 'Login',
+              title: t('login'),
               headerStyle: {
                 backgroundColor: '#000',
               },
@@ -83,7 +84,7 @@ const AppNavigator: React.FC = () => {
             name="SignUp"
             component={SignUpScreen}
             options={{
-              title: 'SignUp',
+              title: t('signup'),
               headerStyle: {
                 backgroundColor: '#000',
               },
@@ -93,7 +94,7 @@ const AppNavigator: React.FC = () => {
             name="VerifyOTP"
             component={VerifyOTPScreen}
             options={{
-              title: 'Verify OTP',
+              title: t('verifyOTP'),
               headerStyle: {
                 backgroundColor: '#000',
               },

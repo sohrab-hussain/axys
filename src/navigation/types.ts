@@ -9,11 +9,7 @@ export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   VerifyOTP: {
-    route?: {
-      params?: {
-        email?: string;
-      };
-    };
+    email?: string;
   };
 };
 

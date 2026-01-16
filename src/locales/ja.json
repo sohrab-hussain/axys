@@ -18,5 +18,8 @@
   "weHaveSent": "6桁の確認コードを送信しました ",
   "theCodeExpire": "このコードは2分後に有効期限が切れます。 ",
   "verifyYourEmail": "メールアドレスを確認してください",
-  "resendCode": "コードを再送信する"
+  "resendCode": "コードを再送信する",
+  "home": "家",
+  "verifyOTP": "OTPを確認する",
+  "backToHome": "ホームに戻る"
 }

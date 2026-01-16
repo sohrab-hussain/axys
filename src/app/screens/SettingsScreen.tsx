@@ -33,7 +33,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
       </View>
 
       <View style={styles.backButton}>
-        <Button title="Back to Home" onPress={() => navigation.goBack()} />
+        <Button title={t('backToHome')} onPress={() => navigation.goBack()} />
       </View>
     </View>
   );

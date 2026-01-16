@@ -19,4 +19,7 @@
   "theCodeExpire": ". The code expires in 2 minutes. ",
   "verifyYourEmail": "Verify your email",
   "resendCode": "Resend code",
+  "home": "Home",
+  "verifyOTP": "Verify OTP",
+  "backToHome": "Back to Home",
 }

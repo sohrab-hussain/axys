@@ -10,15 +10,14 @@ import {
 import { VerifyOTPScreenProps } from '../../navigation/types.ts';
 import { t } from 'i18next';
 
-const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
-  route,
-}) => {
+const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({ route }) => {
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const [timer, setTimer] = useState(60);
   const inputRefs = useRef<(TextInput | null)[]>([]);
 
-  const email = route?.params?.route?.params?.email || 'sohrab@gmail.com';
+  const email = route.params.email || 'sohrab@gmail.com';
 
+  console.log("email = ", email);
   // Timer countdown
   useEffect(() => {
     if (timer > 0) {
